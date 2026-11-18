@@ -12,5 +12,10 @@
     "dev:web": "npm run dev --prefix frontend",
     "heroku-postbuild": "npm run install:all && npm run build"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.3"
+  }
 }

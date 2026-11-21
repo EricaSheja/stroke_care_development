@@ -29,10 +29,18 @@ the link at any time. The other person can also end it.
 | `message` (care-team thread) | yes | yes | yes | yes |
 | `view_calendar` / `edit_calendar` | both | both | both | both |
 | `log_visits` (home visits) | no | no | **yes** | no |
+| `view_mobility` / `log_mobility` (movement log) | view | view + log | view + log | both |
+
+Other new features reuse existing scopes: **goals and personal talk-board phrases** use `view_notes` / `add_notes`
+(the person's own words), **recovery stages** use `view_plan` / `manage_plan` (only a verified clinician writes them), and
+the **progress dashboard** uses `view_summary`.
+
+A link made before the movement log existed keeps the scopes the patient chose then. Nothing new is shared silently:
+the patient adds `view_mobility` / `log_mobility` to an existing link in Sharing, and new links get them by default.
 
 Only a verified clinician writes the plan and the medicine list. Only a verified CHW records home visits.
 
-## Expected responses (exactly what `test_role_matrix.py` checks: 15 routes × 10 callers)
+## Expected responses (exactly what `test_role_matrix.py` checks: 25 routes × 10 callers)
 
 `me` = the caller's own record. Everyone else addresses the survivor by id.
 
@@ -53,6 +61,22 @@ Only a verified clinician writes the plan and the medicine list. Only a verified
 | POST calendar event | 401 | 201 | 201 | 404 | 201 | 404 | 201 | 404 | 403 | 201 |
 | POST home visit | 401 | 403 | 403 | 404 | 403 | 404 | 403 | 404 | 403 | 201 |
 | GET voice notes | 401 | 200 | 200 | 404 | 200 | 404 | 200 | 404 | 403 | 200 |
+| GET movement log | 401 | 200 | 200 | 404 | 200 | 404 | 200 | 404 | 403 | 200 |
+| POST movement entry | 401 | 201 | 201 | 404 | 403 | 404 | 201 | 404 | 403 | 201 |
+| GET goals | 401 | 200 | 200 | 404 | 200 | 404 | 200 | 404 | 403 | 200 |
+| POST goal | 401 | 201 | 201 | 404 | 403 | 404 | 201 | 404 | 403 | 201 |
+| GET recovery stages | 401 | 200 | 200 | 404 | 200 | 404 | 200 | 404 | 403 | 200 |
+| POST recovery stage | 401 | 403 | 403 | 404 | 201 | 404 | 403 | 404 | 403 | 403 |
+| GET personal phrases | 401 | 200 | 200 | 404 | 200 | 404 | 200 | 404 | 403 | 200 |
+| POST personal phrase | 401 | 201 | 201 | 404 | 403 | 404 | 201 | 404 | 403 | 201 |
+| GET progress | 401 | 200 | 200 | 404 | 200 | 404 | 200 | 404 | 403 | 200 |
+| POST several doses at once | 401 | 400* | 400* | 404 | 403 | 404 | 400* | 404 | 403 | 403 |
+
+\* The matrix sends a medicine that does not exist, so the callers who are allowed get a 400 ("not on this person's
+list"). It shows who is let in, not what they may mark.
+
+Two more pages are not under `/patients/<ref>/`: `GET /doctor/overview/` is for clinicians only (403 for everyone else)
+and `GET /me/care-team/` is for the person themselves (403 for a clinician).
 
 404 means "no link, so we do not even confirm the person exists". 403 means "you are linked, but not for this".
 Withdrawing the `health_data` consent turns every linked caller's 200 into 404 at once.

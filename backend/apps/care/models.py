@@ -94,13 +94,14 @@ class Alert(models.Model):
         URGENT_ANSWER = "urgent_answer", "Answered Yes to the urgent check-in question"
         NO_CHECK_IN = "no_check_in", "No check-in for two days or more"
         DOSES_NOT_MARKED = "doses_not_marked", "Doses not marked as taken yesterday"
+        APPOINTMENT_SOON = "appointment_soon", "An appointment is coming up"
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="alerts")
     patient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="+")
     kind = models.CharField(max_length=20, choices=Kind.choices)
     dedupe_key = models.CharField(max_length=120)
-    detail = models.JSONField(default=dict, blank=True, help_text="Dates and counts only.")
+    detail = models.JSONField(default=dict, blank=True, help_text="Dates, counts and the appointment title only.")
     created_at = models.DateTimeField(default=timezone.now)
     read_at = models.DateTimeField(null=True, blank=True)
 

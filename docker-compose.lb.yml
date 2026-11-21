@@ -1,0 +1,19 @@
+# Owner: Orion Kabeza (DevOps)
+# The load balancer of the three-server setup (lb-01). Caddy gets the HTTPS certificate for DOMAIN and spreads
+# requests over the two app servers, skipping one that fails its health check.
+services:
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN in .env}
+      WEB1: ${WEB1:?set WEB1 in .env}
+      WEB2: ${WEB2:?set WEB2 in .env}
+    ports: ["80:80", "443:443"]
+    volumes:
+      - ./deploy/Caddyfile.lb:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+volumes:
+  caddy_data:
+  caddy_config:

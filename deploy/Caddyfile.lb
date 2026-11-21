@@ -1,0 +1,15 @@
+# Owner: Orion Kabeza (DevOps)
+{$DOMAIN} {
+	encode gzip
+	reverse_proxy {$WEB1}:8000 {$WEB2}:8000 {
+		lb_policy least_conn
+		health_uri /healthz
+		health_interval 10s
+		health_timeout 5s
+		# Django answers only to its own host name and redirects plain HTTP, so the check says both.
+		health_headers {
+			Host {$DOMAIN}
+			X-Forwarded-Proto https
+		}
+	}
+}

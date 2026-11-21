@@ -1,0 +1,21 @@
+# Owner: Orion Kabeza (DevOps)
+# The shared PostgreSQL for the three-server setup. Run on web-01 only, together with docker-compose.web.yml.
+# See docs/DEPLOY_THREE_NODE.md. Fictional demo data only (docs/OPEN_QUESTIONS.md).
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: strokecare
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: strokecare
+    # web-02 connects here, so it is published on this server's private address. The firewall rules in
+    # docs/DEPLOY_THREE_NODE.md limit it to web-02.
+    ports: ["${BIND_IP:?set BIND_IP in .env}:5432:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U strokecare"]
+      interval: 5s
+      retries: 10
+volumes:
+  pgdata:

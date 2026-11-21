@@ -1,0 +1,32 @@
+# Owner: Orion Kabeza (DevOps)
+# One app server of the three-server setup. Run on web-01 (with docker-compose.db.yml and --profile worker) and on
+# web-02 (alone). Only the load balancer may reach port 8000 (docs/DEPLOY_THREE_NODE.md).
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    environment: &env
+      DJANGO_DEBUG: "0"
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?set DJANGO_SECRET_KEY in .env}
+      DATABASE_URL: postgres://strokecare:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@${DB_HOST:?set DB_HOST in .env}:5432/strokecare
+      DJANGO_ALLOWED_HOSTS: ${DOMAIN:?set DOMAIN in .env},localhost
+      CSRF_TRUSTED_ORIGINS: https://${DOMAIN}
+      NUM_PROXIES: "1"
+      ALLOW_DEMO_DATA: ${ALLOW_DEMO_DATA:-0}
+    ports: ["${BIND_IP:?set BIND_IP in .env}:8000:8000"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen(u.Request('http://localhost:8000/healthz', headers={'X-Forwarded-Proto': 'https'}))"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+  # The alert scheduler runs on ONE server only (web-01), so alerts are not worked out twice.
+  worker:
+    profiles: ["worker"]
+    build: .
+    restart: unless-stopped
+    depends_on:
+      web:
+        condition: service_healthy
+    environment: *env
+    command: ["python", "manage.py", "run_scheduler", "--interval", "900"]

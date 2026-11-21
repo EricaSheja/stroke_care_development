@@ -248,6 +248,91 @@ erDiagram
     CharField reviewed_by_name
     DateTimeField reviewed_at
   }
+  Message {
+    UUIDField id PK
+    ForeignKey patient FK
+    ForeignKey sender FK
+    TextField body
+    DateTimeField created_at
+  }
+  ThreadRead {
+    BigAutoField id PK
+    ForeignKey patient FK
+    ForeignKey user FK
+    DateTimeField last_read_at
+  }
+  CareEvent {
+    UUIDField id PK
+    ForeignKey patient FK
+    CharField title
+    CharField kind
+    DateTimeField starts_at
+    DateTimeField ends_at
+    CharField location
+    CharField notes
+    PositiveIntegerField remind_minutes_before
+    ForeignKey assigned_to FK
+    DateTimeField done_at
+    ForeignKey created_by FK
+    DateTimeField created_at
+  }
+  HandoverNote {
+    UUIDField id PK
+    ForeignKey patient FK
+    CharField text
+    ForeignKey created_by FK
+    DateTimeField created_at
+  }
+  HomeVisit {
+    UUIDField id PK
+    UUIDField client_id
+    ForeignKey patient FK
+    ForeignKey chw FK
+    DateTimeField visited_at
+    JSONField checklist
+    CharField note
+    ForeignKey reading FK
+    DateTimeField received_at
+  }
+  Goal {
+    UUIDField id PK
+    ForeignKey patient FK
+    CharField text
+    DateField target_date
+    DateTimeField done_at
+    ForeignKey entered_by FK
+    DateTimeField created_at
+  }
+  CarePhase {
+    UUIDField id PK
+    ForeignKey patient FK
+    CharField name
+    DateField starts_on
+    DateField ends_on
+    TextField care_needed
+    ForeignKey created_by FK
+    DateTimeField created_at
+  }
+  MobilityLog {
+    UUIDField id PK
+    ForeignKey patient FK
+    DateField date
+    CharField kind
+    PositiveSmallIntegerField minutes
+    CharField help
+    CharField note
+    ForeignKey entered_by FK
+    UUIDField client_id
+    DateTimeField created_at
+  }
+  CustomPhrase {
+    UUIDField id PK
+    ForeignKey patient FK
+    CharField text
+    CharField icon
+    ForeignKey entered_by FK
+    DateTimeField created_at
+  }
   User ||--}o AuditLog : "actor"
   User ||--}o AuditLog : "subject"
   User ||--}o Consent : "user"
@@ -279,3 +364,23 @@ erDiagram
   User ||--}o VoiceNote : "patient"
   User ||--}o VoiceNote : "recorded_by"
   EducationItem ||--}o EducationTranslation : "item"
+  User ||--}o Message : "patient"
+  User ||--}o Message : "sender"
+  User ||--}o ThreadRead : "patient"
+  User ||--}o ThreadRead : "user"
+  User ||--}o CareEvent : "patient"
+  User ||--}o CareEvent : "assigned_to"
+  User ||--}o CareEvent : "created_by"
+  User ||--}o HandoverNote : "patient"
+  User ||--}o HandoverNote : "created_by"
+  User ||--}o HomeVisit : "patient"
+  User ||--}o HomeVisit : "chw"
+  BPReading ||--}o HomeVisit : "reading"
+  User ||--}o Goal : "patient"
+  User ||--}o Goal : "entered_by"
+  User ||--}o CarePhase : "patient"
+  User ||--}o CarePhase : "created_by"
+  User ||--}o MobilityLog : "patient"
+  User ||--}o MobilityLog : "entered_by"
+  User ||--}o CustomPhrase : "patient"
+  User ||--}o CustomPhrase : "entered_by"

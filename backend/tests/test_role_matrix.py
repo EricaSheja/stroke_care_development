@@ -63,6 +63,26 @@ MATRIX = {
     "GET voice notes": ("get", "voice-notes/", None, dict(
         visitor=401, survivor=200, prevention=200, other_survivor=404,
         clinician=200, clinician_unlinked=404, caregiver=200, caregiver_unlinked=404, admin=403, chw=200)),
+    "GET mobility": ("get", "mobility/", None, dict(
+        visitor=401, survivor=200, prevention=200, other_survivor=404, clinician=200, clinician_unlinked=404, caregiver=200, caregiver_unlinked=404, admin=403, chw=200)),
+    "POST mobility": ("post", "mobility/", {"kind": "walking", "minutes": 10}, dict(
+        visitor=401, survivor=201, prevention=201, other_survivor=404, clinician=403, clinician_unlinked=404, caregiver=201, caregiver_unlinked=404, admin=403, chw=201)),
+    "GET goals": ("get", "goals/", None, dict(
+        visitor=401, survivor=200, prevention=200, other_survivor=404, clinician=200, clinician_unlinked=404, caregiver=200, caregiver_unlinked=404, admin=403, chw=200)),
+    "POST goal": ("post", "goals/", {"text": "Walk to the gate"}, dict(
+        visitor=401, survivor=201, prevention=201, other_survivor=404, clinician=403, clinician_unlinked=404, caregiver=201, caregiver_unlinked=404, admin=403, chw=201)),
+    "GET phases": ("get", "phases/", None, dict(
+        visitor=401, survivor=200, prevention=200, other_survivor=404, clinician=200, clinician_unlinked=404, caregiver=200, caregiver_unlinked=404, admin=403, chw=200)),
+    "POST phase": ("post", "phases/", {"name": "First stage", "starts_on": "2026-11-01"}, dict(
+        visitor=401, survivor=403, prevention=403, other_survivor=404, clinician=201, clinician_unlinked=404, caregiver=403, caregiver_unlinked=404, admin=403, chw=403)),
+    "GET phrases": ("get", "phrases/", None, dict(
+        visitor=401, survivor=200, prevention=200, other_survivor=404, clinician=200, clinician_unlinked=404, caregiver=200, caregiver_unlinked=404, admin=403, chw=200)),
+    "POST phrase": ("post", "phrases/", {"text": "I am thirsty"}, dict(
+        visitor=401, survivor=201, prevention=201, other_survivor=404, clinician=403, clinician_unlinked=404, caregiver=201, caregiver_unlinked=404, admin=403, chw=201)),
+    "GET progress": ("get", "progress/", None, dict(
+        visitor=401, survivor=200, prevention=200, other_survivor=404, clinician=200, clinician_unlinked=404, caregiver=200, caregiver_unlinked=404, admin=403, chw=200)),
+    "POST bulk doses": ("post", "medications/doses/bulk/", {"doses": [{"medication": "0b6f7c8e-1d2a-4c3b-9e8f-7a6b5c4d3e2f", "time": "08:00"}]}, dict(
+        visitor=401, survivor=400, prevention=400, other_survivor=404, clinician=403, clinician_unlinked=404, caregiver=400, caregiver_unlinked=404, admin=403, chw=403)),
 }  # fmt: skip
 
 CASES = [(route, actor) for route in MATRIX for actor in ACTORS]

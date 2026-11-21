@@ -2,7 +2,7 @@
 # Architecture
 
 ```
-Browser (Vue 3 installable app at "/", 3 languages, works offline)
+Browser (installable app in plain HTML, CSS and JavaScript at "/", 3 languages, works offline)
    │  HTTPS, JSON, Authorization: Bearer <short-lived access token>
    ▼
 Django + DRF (one service: the app at "/", the API under /api/v1/, the admin under /admin/)
@@ -23,7 +23,7 @@ All personal-data routes live under `/api/v1/patients/<me|uuid>/…` and go thro
 
 Every access by someone other than the patient is written to the append-only audit log, and the patient can see
 that list in their data export. Roles and scopes are laid out in `ROLES_MATRIX.md`, and proven by
-`backend/tests/test_role_matrix.py` (150 route × person cases, 15 routes × 10 kinds of caller).
+`backend/tests/test_role_matrix.py` (every personal-data route against every kind of caller).
 
 ## Sign-in
 

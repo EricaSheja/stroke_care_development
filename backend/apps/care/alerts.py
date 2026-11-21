@@ -6,6 +6,8 @@ repeats one. `python manage.py generate_alerts` does the same for every caregive
 """
 from datetime import timedelta
 
+from django.utils import timezone
+
 from apps.accounts.models import ConsentKind
 from apps.care import scopes as sc
 from apps.health.services import local_today, patient_facts
@@ -13,6 +15,7 @@ from apps.health.services import local_today, patient_facts
 from .models import Alert, CareLink, LinkStatus, Relation
 
 URGENT_LOOKBACK_DAYS = 3
+APPOINTMENT_LOOKAHEAD_DAYS = 3  # the longest reminder lead time offered is two days
 
 
 def refresh_for(member) -> int:
@@ -41,6 +44,18 @@ def refresh_for(member) -> int:
                 Alert.Kind.DOSES_NOT_MARKED, f"doses:{patient.id}:{yday}",
                 {"date": str(yday), "count": facts["doses_not_marked_yesterday"]},
             ))  # fmt: skip
+        if sc.VIEW_CALENDAR in link.scopes:
+            now = timezone.now()
+            soon = patient.care_events.filter(
+                remind_minutes_before__isnull=False, done_at__isnull=True, starts_at__gt=now,
+                starts_at__lte=now + timedelta(days=APPOINTMENT_LOOKAHEAD_DAYS),
+            )  # fmt: skip
+            for e in soon:
+                if now >= e.starts_at - timedelta(minutes=e.remind_minutes_before):
+                    events.append((
+                        Alert.Kind.APPOINTMENT_SOON, f"appt:{e.id}:{e.remind_minutes_before}",
+                        {"title": e.title, "starts_at": e.starts_at.isoformat(), "location": e.location},
+                    ))  # fmt: skip
         for kind, key, detail in events:
             _, was_new = Alert.objects.get_or_create(
                 recipient=member, dedupe_key=key, defaults={"patient": patient, "kind": kind, "detail": detail}

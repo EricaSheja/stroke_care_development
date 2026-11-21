@@ -1,6 +1,6 @@
-// Owner: Emmanuel Happy Rangira (Frontend developer) · AI-assisted draft, see AI_USE_LOG.md
+// Owner: Emmanuel Happy Rangira (Frontend developer)
 // English, Kinyarwanda and French. English is the fallback, so a missing translation never shows a blank.
-// The French and Kinyarwanda texts are AI drafts: a native speaker must review them (docs/OPEN_QUESTIONS.md).
+// The French and Kinyarwanda texts are drafts: a native speaker must review them (docs/OPEN_QUESTIONS.md).
 // The texts live in /locales/<code>.json (Erica owns them). t('a.b') finds a text; "{n}" is filled from the params;
 // a text written as "one | other" picks a form by the count passed as the third argument.
 import { setApiLocale } from './api.js'

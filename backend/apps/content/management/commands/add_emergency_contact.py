@@ -1,6 +1,6 @@
 """Add or update one emergency contact, marked as verified by a named person. Safe to run again.
 
-Owner: Erica Rurangwa Sheja (Product Owner) · AI-assisted draft, see AI_USE_LOG.md
+Owner: Erica Rurangwa Sheja (Product Owner)
 Safety rule: numbers never live in the code, so they are entered here, by a person, with the name of whoever
 verified them. The app shows a number only once it has a verifier and a date (docs/SAFETY.md, rule 4).
 

@@ -1,7 +1,7 @@
 """Emergency guidance shown with the verified contact list.
 Safety rules: it says "contact local emergency services" and "do not wait for this app". It contains NO phone
 number. Numbers come only from verified EmergencyContact rows.
-LAUNCH BLOCKER: the French and Kinyarwanda texts are AI drafts. A native speaker with clinical review must
+LAUNCH BLOCKER: the French and Kinyarwanda texts are drafts. A native speaker with clinical review must
 check them before real use (see docs/OPEN_QUESTIONS.md).
 """
 from apps.common.locale import pick

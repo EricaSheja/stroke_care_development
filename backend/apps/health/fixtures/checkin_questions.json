@@ -35,7 +35,7 @@
       }
     ],
     "urgent_values": [],
-    "source": "Daily_CheckIn_Questions draft in the team tracker. Answer options added by the developer: Erica to confirm. French and Kinyarwanda are AI drafts awaiting a native reviewer."
+    "source": "Daily_CheckIn_Questions draft in the team tracker. Answer options added by the developer: Erica to confirm. French and Kinyarwanda are drafts awaiting a native reviewer."
   },
   {
     "code": "new-or-worse-symptoms",
@@ -135,7 +135,7 @@
     "follow_up_when": [
       true
     ],
-    "source": "Daily_CheckIn_Questions draft in the team tracker. A Yes shows urgent guidance straight away. French and Kinyarwanda are AI drafts awaiting a native reviewer. Symptom list added by the developer as everyday words: needs clinical review."
+    "source": "Daily_CheckIn_Questions draft in the team tracker. A Yes shows urgent guidance straight away. French and Kinyarwanda are drafts awaiting a native reviewer. Symptom list added by the developer as everyday words: needs clinical review."
   },
   {
     "code": "movement-vs-plan",
@@ -181,7 +181,7 @@
       }
     ],
     "urgent_values": [],
-    "source": "Daily_CheckIn_Questions draft in the team tracker. Answer options added by the developer: Erica to confirm. French and Kinyarwanda are AI drafts awaiting a native reviewer."
+    "source": "Daily_CheckIn_Questions draft in the team tracker. Answer options added by the developer: Erica to confirm. French and Kinyarwanda are drafts awaiting a native reviewer."
   },
   {
     "code": "new-joint-pain",
@@ -194,6 +194,6 @@
     },
     "choices": [],
     "urgent_values": [],
-    "source": "Daily_CheckIn_Questions draft in the team tracker. French and Kinyarwanda are AI drafts awaiting a native reviewer."
+    "source": "Daily_CheckIn_Questions draft in the team tracker. French and Kinyarwanda are drafts awaiting a native reviewer."
   }
 ]

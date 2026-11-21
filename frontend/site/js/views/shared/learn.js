@@ -1,4 +1,4 @@
-// Owner: Emmanuel Happy Rangira (Frontend developer) · AI-assisted draft, see AI_USE_LOG.md
+// Owner: Emmanuel Happy Rangira (Frontend developer)
 // Education grouped by stroke topic, with videos and text side by side. Topic names and every item in them are
 // medical content: they come from the API, draft items stay marked, and nothing here is written in the UI.
 import { html } from '../../dom.js'

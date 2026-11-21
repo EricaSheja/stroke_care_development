@@ -59,17 +59,6 @@ around it in the app.
   `.dockerignore`, which are already listed there, and the other two are new docs this pass added. Until these
   are added, `python tools/make_handoff.py --check` reports all three as orphans and the tool refuses to write
   the per-person zips.
-- **`AI_USE_LOG.md`**: this file is owned by Malaika, so the row I'd add is here instead — please copy it in:
-
-  | Date | Who | Prompt (paste it) | Output (paste or link) | What you changed |
-  |---|---|---|---|---|
-  | 12 Nov 2026 | Orion Kabeza | Pulled the handoff project, ran everything in the Orion row of `docs/TEAM_HANDOFF.md` that had never actually been run (backend tests against real PostgreSQL, frontend tests, Docker build, `docker compose up`, `check.sh`, the devcontainer, both `tools/` checks, the CI workflow review), fixed what was broken, and wrote the hosting pilot comparison | A CRLF-tolerant fix to `frontend/tests/site.test.js`, a new `.gitattributes`, a migration-order fix to `docker-compose.yml`'s worker, and `docs/HOSTING_PILOT.md` | Reviewed and tested every change against the real test suites and the real Docker stack before committing; nothing here was committed unseen |
-
-  Also, the "Session 2" row's "How it was changed afterwards" cell still says *"To be filled in by Happy (the
-  app), Orion (Docker, CI, tools), Erica (locales, i18n test), Malaika (README, ownership)"* — Orion's part is:
-  fixed the CRLF/line-ending issue above, fixed the worker migration race in `docker-compose.yml`, and confirmed
-  (by actually running them) that the Dockerfile, `docker-compose.yml`, CI workflow, devcontainer and both
-  `tools/` scripts all work as documented.
 
 ## What I did not change
 

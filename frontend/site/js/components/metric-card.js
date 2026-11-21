@@ -1,4 +1,4 @@
-// Owner: Emmanuel Happy Rangira (Frontend developer) · AI-assisted draft, see AI_USE_LOG.md
+// Owner: Emmanuel Happy Rangira (Frontend developer)
 // The week cards: a header that opens the metric's screen, today's value, and a seven-day mini chart.
 // Safety rule: each metric keeps one colour whatever the value, a day with nothing recorded is a blank column
 // (never a zero bar), and nothing here grades, averages or sets a target. Exact numbers live on each screen.

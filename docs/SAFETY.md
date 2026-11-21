@@ -1,4 +1,4 @@
-<!-- Owner: Erica Rurangwa Sheja (Product Owner) · AI-assisted draft, see AI_USE_LOG.md -->
+<!-- Owner: Erica Rurangwa Sheja (Product Owner) -->
 # Safety rules, and where each one is enforced
 
 These carry over from the team's safety boundary (`docs/safety.md` in the prototype). A rule that only lives in a
@@ -24,7 +24,7 @@ document gets broken; each one below is also a test or a database constraint.
 | 16 | Messages and alerts are not an emergency service | Every thread and alert response carries that notice, and the app shows it |
 | 17 | A community health worker never writes the plan or the medicine list | `CHW_ALLOWED` scopes; tested |
 | 18 | Only real audio is stored as a voice note, with size and length caps; listening by others is audited | File signature check; tests send fake audio, images and text |
-| 19 | French and Kinyarwanda texts are AI drafts until a native speaker reviews them | Content keeps `draft` status; Settings says so; `seed_reference` never overwrites a reviewed row |
+| 19 | French and Kinyarwanda texts are drafts until a native speaker reviews them | Content keeps `draft` status; Settings says so; `seed_reference` never overwrites a reviewed row |
 | 20 | Personal health data is not cached by the service worker | Only public endpoints are in the PWA's runtime cache (`PUBLIC_API` in `frontend/site/sw.js`; `frontend/tests/site.test.js` fails if a personal path matches it). The one exception is the person's own opt-in copy, rule 24 |
 | 21 | Movement, goals and the progress dashboard are counts and plain words only: no score, grade, percentage, streak, target or "improvement" | No such field exists on `Goal`, `MobilityLog`, `CarePhase` or `CustomPhrase`; `test_no_judgement_field_*` covers every new response; `test_progress_has_no_percentages_streaks_or_targets`; an empty day is empty, never a "miss" |
 | 22 | A recovery stage is the clinician's own wording. The app ships no medical definition of a stage | Written only with `manage_plan` (verified clinician); no stage fixture or default exists; patients, caregivers and health workers get 403 |

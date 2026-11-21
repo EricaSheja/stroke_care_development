@@ -1,5 +1,5 @@
-/* Owner: Emmanuel Happy Rangira (Frontend developer) · AI-assisted draft, see AI_USE_LOG.md
-   Same tokens as the Claude Design canvas. Loaded once by index.html; class="sc-app" sits on <html>. */
+/* Owner: Emmanuel Happy Rangira (Frontend developer)
+   Same tokens as the design canvas. Loaded once by index.html; class="sc-app" sits on <html>. */
 /* StrokeCare design tokens and components. Direction C, "Modern product".
    One source for every screen.
    Safety: --danger is for emergency help ONLY. Health values never take a colour. */

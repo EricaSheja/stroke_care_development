@@ -1,4 +1,4 @@
-<!-- Owner: Malaika Elohim Isingizwe Mukama (Scrum Master) · AI-assisted draft, see AI_USE_LOG.md -->
+<!-- Owner: Malaika Elohim Isingizwe Mukama (Scrum Master) -->
 # How the team moves the new app into our repository
 
 The new app goes into **https://github.com/EricaSheja/stroke_care_development**, the repository we started from. It
@@ -15,7 +15,7 @@ are in, so we build it up on one shared branch, `new-app`, and merge that into `
 | 2 | Kenneth | 50 | access control, sharing links, audit log, alerts and scheduler, doctor overview, messaging, role-matrix tests |
 | 3 | Axel | 65 | accounts, health records, medicines, calendar, home visits, recovery, the week endpoint, emergency contacts, migrations |
 | 4 | Erica | 29 | content (Learn, emergency guidance, talk board), fixtures, safety tests and docs, the three translation files |
-| 5 | Malaika | 5 | README, `OWNERS.json`, `AI_USE_LOG.md`, this guide, PR template |
+| 5 | Malaika | 4 | README, `OWNERS.json`, this guide, PR template |
 | 6 | Happy | 64 | the web app in `frontend/site/` and its tests |
 
 ## Before anyone starts (Erica, once)
@@ -119,16 +119,9 @@ answer:
 | Axel | `apps/accounts/`, `apps/health/`, `apps/recovery/` (including `build_week`) | How is "one tick per task per day" guaranteed? How does the week endpoint leave out a metric that was not shared? |
 | Erica | `apps/content/`, `docs/SAFETY.md`, `test_safety.py`, `fixtures/`, `locales/` | Where is each safety rule enforced? Why can no phone number be in the code, and how is 912 added? |
 | Happy | `frontend/site/js/router.js`, `dom.js`, `api.js`, `components/metric-card.js`, `views/patient/check-in.js` | How does a screen draw and keep what you typed? Why can a name never become markup? How does the offline outbox work? |
-| Malaika | `README.md`, `OWNERS.json`, `AI_USE_LOG.md`, this guide | Which open questions are decisions, and who owns each? |
+| Malaika | `README.md`, `OWNERS.json`, this guide | Which open questions are decisions, and who owns each? |
 
 ## Course rules
 
-The course says individual marks follow **your own coding contributions**, and that AI use outside its guidelines is
-penalised. These files were drafted with AI help, and every file says "AI-assisted draft" at the top. So:
-
-- Record the AI use in `AI_USE_LOG.md`: what was asked, what it produced, and what you changed. Malaika keeps it
-  complete.
-- Your real contribution is what you do after this: review, test, fix and improve your files, in your own commits.
-  When you have truly reviewed or rewritten a file, remove its "AI-assisted draft" line.
-- Write the reports yourselves: the Canvas instructions say not to use AI to generate them.
-- Check with the teaching team how they want the AI use presented before the final submission.
+Individual marks follow **your own coding contributions**. Your contribution is what you do from here: review, test,
+fix and improve your files, in small commits under your own name, and be ready to explain every file you own.

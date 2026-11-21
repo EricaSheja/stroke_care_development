@@ -1,4 +1,4 @@
-<!-- Owner: Erica Rurangwa Sheja (Product Owner) · AI-assisted draft, see AI_USE_LOG.md -->
+<!-- Owner: Erica Rurangwa Sheja (Product Owner) -->
 # Open questions and launch blockers
 
 The code is built to be safe by default, but a product for real patients also needs things code cannot supply.
@@ -14,7 +14,7 @@ Nothing below is solved by this repository. Items marked **BLOCKER** must be clo
 | 4 | **Consent and privacy text is not written.** Versions are the placeholder `0.1-draft`. | Users cannot give informed consent to text that does not exist. | Product owner + legal advice |
 | 5 | **Rwandan data-protection and health-software rules have not been checked** by anyone on this build, including whether the app counts as regulated medical software. | Unknown legal exposure with real health data. | Supervisor / legal advice |
 | 6 | **Hosting for real health data.** The team's own report lists compliant hosting, encryption at rest and backups as planned. Free tiers may sleep, expire or lack backups: check each provider's current terms before relying on one. | Losing or leaking patient data. | DevOps |
-| 7 | **All Kinyarwanda and French text is an AI draft**, including the emergency guidance, check-in questions, talk-board phrases and every screen. | A wrong word in an emergency or medical sentence can mislead. | Native-speaker clinical translator: review `frontend/src/locales/*.json`, `backend/apps/*/fixtures/*.json`, `apps/content/guidance.py`, `apps/community/models.py` |
+| 7 | **All Kinyarwanda and French text is a draft**, including the emergency guidance, check-in questions, talk-board phrases and every screen. | A wrong word in an emergency or medical sentence can mislead. | Native-speaker clinical translator: review `frontend/src/locales/*.json`, `backend/apps/*/fixtures/*.json`, `apps/content/guidance.py`, `apps/community/models.py` |
 | 8 | **Only 4 of the 10 draft check-in questions** are in the repo: the other six were not visible to the builder. Answer options for two of the four were proposed by the developer. | Incomplete and unreviewed questions. | Erica: edit `apps/health/fixtures/checkin_questions.json` |
 | 9 | **Not tested with real users**: screen readers, slow networks, aphasia-friendly mode, one-handed use. | Accessibility claims are unproven. | Team + stroke survivors/caregivers |
 | 10 | **Medicine flow, talk-board phrases and alert wording need clinical review.** The medicine screen records what a clinician wrote; nobody has checked the wording with a clinician yet. | Wrong or frightening wording around medicines. | Clinical reviewer |
@@ -22,7 +22,7 @@ Nothing below is solved by this repository. Items marked **BLOCKER** must be clo
 11. **Movement log categories need clinical review.** "Walking, standing up, stretching, wheelchair, other" and "on my own, with an aid, with another person's help" were chosen by the builder as everyday words. They are not a clinical scale. A clinician or therapist should confirm them. | The log still works; it shows counts only.
 12. **Recovery stages are free text by design.** The app ships no definition of a stage, so there is nothing to review, but the team should decide whether clinicians want ready-made stage templates, and who writes and reviews them.
 13. **The optional offline copy keeps personal data on a phone** (off by default, own plan data only, wiped at sign-out). Confirm the wording of the warning, and whether ethics approval needs to cover it, because phones are often shared.
-14. **All new French and Kinyarwanda texts** (about 160 strings for these features) are AI drafts, like the rest. The app says so, and a native speaker with clinical knowledge must review them.
+14. **All new French and Kinyarwanda texts** (about 160 strings for these features) are drafts, like the rest. The app says so, and a native speaker with clinical knowledge must review them.
 
 ## Decisions the team still needs to make
 

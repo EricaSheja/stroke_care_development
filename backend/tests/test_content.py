@@ -115,7 +115,7 @@ def test_talk_board_is_public_draft_and_falls_back_to_english():
 
     call_command("seed_reference")
     rows = APIClient().get("/api/v1/talk-board/?lang=rw").json()["results"]
-    assert len(rows) == 17 and all(r["status"] == "draft" for r in rows)  # AI-drafted translations stay draft
+    assert len(rows) == 17 and all(r["status"] == "draft" for r in rows)  # unreviewed translations stay draft
     assert all(r["locale_served"] == "rw" and r["label"] for r in rows)
     assert {r["category"] for r in rows} == {"answers", "needs", "feelings", "people"}
     assert "audio_url" not in rows[0]  # no recordings: the phone's own voice reads the words

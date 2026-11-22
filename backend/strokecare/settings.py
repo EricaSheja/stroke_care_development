@@ -185,7 +185,9 @@ if DEBUG:
 FRONTEND_DIST = Path(os.environ.get("FRONTEND_DIST", BASE_DIR.parent / "frontend" / "site"))
 if FRONTEND_DIST.exists():
     WHITENOISE_ROOT = FRONTEND_DIST
-    WHITENOISE_INDEX_FILE = True
+    # False: "/" must fall through to urls.py's spa() view like every other route, not be served directly by
+    # WhiteNoise, or it skips the Content-Security-Policy and Permissions-Policy headers set below.
+    WHITENOISE_INDEX_FILE = False
     WHITENOISE_MIMETYPES = {".webmanifest": "application/manifest+json"}
 # Applied to the app's page. Fonts come from Google Fonts; Learn videos play in YouTube's no-cookie player (loaded
 # only after a tap) with their thumbnails from YouTube's image host; everything else from this site only.

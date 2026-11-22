@@ -78,9 +78,17 @@ python tools/make_precache.py --check
 
 ### Demo accounts
 
-`seed_demo` creates these fictional accounts, all `@example.org`, all with the password you gave it:
+`seed_demo` creates one fictional account per role, all with the password you gave it. On the live demo above, the
+password is `admin@2025!`.
 
-`demo-survivor`, `demo-prevention`, `demo-caregiver`, `demo-clinician`, `demo-chw`, `demo-admin`.
+| Email | Role |
+|---|---|
+| `demo-survivor@example.org` | Stroke survivor |
+| `demo-prevention@example.org` | Prevention user |
+| `demo-caregiver@example.org` | Caregiver |
+| `demo-clinician@example.org` | Clinician |
+| `demo-chw@example.org` | Community health worker |
+| `demo-admin@example.org` | Administrator / content reviewer |
 
 The data is fictional and must never be used with real people.
 

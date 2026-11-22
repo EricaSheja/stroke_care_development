@@ -90,7 +90,7 @@ The live demo runs on Render's free tier from this repository's `master` branch,
 API and the web app (same image as local Docker, `DATABASE_URL`/`DJANGO_SECRET_KEY`/etc. set as Render environment
 variables). Two notes specific to that host:
 
-- The free web service sleeps after 15 minutes idle (next request takes ~30–50s to wake it); `.github/workflows/keepalive.yml` pings `/healthz` every 10 minutes to keep it awake, once its `STROKECARE_URL` repository secret is set.
+- The free web service sleeps after 15 minutes idle (next request takes ~30–50s to wake it); an external uptime monitor (UptimeRobot) pings `/healthz` every 5 minutes to keep it awake. GitHub Actions' own `schedule:` trigger cannot do this reliably — on a public repo it runs sub-hourly cron jobs only a handful of times a day, nowhere near often enough.
 - Render's free PostgreSQL instance expires after a set number of days — a pilot/demo database, not a permanent one.
 
 For other hosting options (a single server, or Oracle Cloud's free tier), see `docs/DEPLOYMENT.md`,

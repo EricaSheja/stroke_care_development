@@ -1,4 +1,3 @@
-// Owner: Emmanuel Happy Rangira (Frontend developer) · AI-assisted draft, see AI_USE_LOG.md
 // Who is signed in, and the display and input preferences. Both announce changes so the page can redraw.
 import { API_BASE, ApiError, api, onLogout, tokens } from './api.js'
 import { setCopyOwner, wipeCopies } from './copy.js'

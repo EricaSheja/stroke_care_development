@@ -1,10 +1,10 @@
-// Owner: Emmanuel Happy Rangira (Frontend developer) · AI-assisted draft, see AI_USE_LOG.md
+// Owner: Emmanuel Happy Rangira (Frontend developer) · 
 import { html } from '../../dom.js'
 import { LOCALES, locale, setLocale, t } from '../../i18n.js'
 import { icon, pauseHeroOffscreen } from '../../ui.js'
 
 export default function welcome(ctx) {
-    ctx.draw(html`<main class="page">
+  ctx.draw(html`<main class="page">
     <section class="hero-head">
       <img src="/img/hero-heart.svg" alt="" class="hero-illustration" />
       <div class="sc-rise stack-s">
@@ -31,7 +31,7 @@ export default function welcome(ctx) {
     </div>
     <p class="tiny">${t('welcome.safety')}</p>
   </main>`)
-    pauseHeroOffscreen(ctx)
-    // Choosing a language redraws the app in that language (the router listens for the change).
-    ctx.on('click', '[data-lang]', (el) => setLocale(el.dataset.lang))
+  pauseHeroOffscreen(ctx)
+  // Choosing a language redraws the app in that language (the router listens for the change).
+  ctx.on('click', '[data-lang]', (el) => setLocale(el.dataset.lang))
 }

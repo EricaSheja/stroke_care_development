@@ -1,4 +1,3 @@
-// Owner: Emmanuel Happy Rangira (Frontend developer) · AI-assisted draft, see AI_USE_LOG.md
 // The frame around every screen: the top bar with the Emergency button, the side or bottom navigation for the
 // signed-in role, and the offline notices. It redraws whenever the route, the person, the language or the
 // connection changes.

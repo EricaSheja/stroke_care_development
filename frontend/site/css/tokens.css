@@ -1,9 +1,3 @@
-/* Owner: Emmanuel Happy Rangira (Frontend developer) · AI-assisted draft, see AI_USE_LOG.md
-   Same tokens as the Claude Design canvas. Loaded once by index.html; class="sc-app" sits on <html>. */
-/* StrokeCare design tokens and components. Direction C, "Modern product".
-   One source for every screen.
-   Safety: --danger is for emergency help ONLY. Health values never take a colour. */
-
 .sc-app {
     /* Light theme: near-white canvas, black ink, one warm orange accent. See docs/design/UI_UX_REDESIGN_SPEC.md. */
     --bg: linear-gradient(180deg, #F4F4F2 0%, #ECECEA 100%);

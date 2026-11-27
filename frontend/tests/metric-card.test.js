@@ -1,4 +1,4 @@
-// Owner: Emmanuel Happy Rangira (Frontend developer) · AI-assisted draft, see AI_USE_LOG.md
+// Owner: Emmanuel Happy Rangira (Frontend developer) · 
 // The week cards: an empty day is blank (never a zero bar), every day is read out, and no colour depends on a value.
 import './setup.js'
 

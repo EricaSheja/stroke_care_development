@@ -1,4 +1,4 @@
-// Owner: Emmanuel Happy Rangira (Frontend developer) · AI-assisted draft, see AI_USE_LOG.md
+// Owner: Emmanuel Happy Rangira (Frontend developer) · 
 // The service worker: keeps the app itself (pages, scripts, styles, texts) working without a connection.
 // Privacy rule: ONLY public content is ever cached here (education, the talk board, emergency guidance, the visit
 // checklist). Personal health data is never cached by the service worker. The person's own optional copy is a

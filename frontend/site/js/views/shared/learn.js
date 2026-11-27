@@ -1,4 +1,4 @@
-// Owner: Emmanuel Happy Rangira (Frontend developer) · AI-assisted draft, see AI_USE_LOG.md
+// Owner: Emmanuel Happy Rangira (Frontend developer) · 
 // Education grouped by stroke topic, with videos and text side by side. Topic names and every item in them are
 // medical content: they come from the API, draft items stay marked, and nothing here is written in the UI.
 import { html } from '../../dom.js'
@@ -8,9 +8,9 @@ import { draftNote, emptyState, icon, pageHeader } from '../../ui.js'
 const fmtDuration = (seconds) => t('learn.minutes', { n: Math.max(1, Math.round(seconds / 60)) })
 
 export default async function learn(ctx) {
-    const s = { topics: [], items: [], active: 'all', loading: true }
+  const s = { topics: [], items: [], active: 'all', loading: true }
 
-    const videoCard = (item, delay) => html`<a href="/learn/${item.slug}" class="sc-card sc-rise stack-s" style="animation-delay: ${delay}ms; text-decoration: none; color: var(--ink); overflow: hidden; padding: 0">
+  const videoCard = (item, delay) => html`<a href="/learn/${item.slug}" class="sc-card sc-rise stack-s" style="animation-delay: ${delay}ms; text-decoration: none; color: var(--ink); overflow: hidden; padding: 0">
     <div style="position: relative; aspect-ratio: 16 / 9; background: var(--surface-2)">
       ${item.poster_url ? html`<img src="${item.poster_url}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block" />` : ''}
       <span aria-hidden="true" style="position: absolute; inset: 0; display: grid; place-items: center">
@@ -25,7 +25,7 @@ export default async function learn(ctx) {
     </div>
   </a>`
 
-    const textCard = (item, delay) => html`<a href="/learn/${item.slug}" class="sc-card sc-rise pad row" style="animation-delay: ${delay}ms; text-decoration: none; color: var(--ink); align-items: flex-start">
+  const textCard = (item, delay) => html`<a href="/learn/${item.slug}" class="sc-card sc-rise pad row" style="animation-delay: ${delay}ms; text-decoration: none; color: var(--ink); align-items: flex-start">
     <span class="sc-iconbox">${icon('book-open-text', 26, 'duotone')}</span>
     <span class="stack-s">
       <strong style="font-size: 1.1rem">${item.title}</strong>
@@ -34,22 +34,22 @@ export default async function learn(ctx) {
     </span>
   </a>`
 
-    const topicSection = (name, items) => {
-        const videos = items.filter((i) => i.kind === 'video').length
-        const toRead = items.length - videos
-        const count = [videos ? t('learn.videosCount', { n: videos }, videos) : '', toRead ? t('learn.toReadCount', { n: toRead }) : ''].filter(Boolean).join(' · ')
-        return html`<section class="sc-card pad stack">
+  const topicSection = (name, items) => {
+    const videos = items.filter((i) => i.kind === 'video').length
+    const toRead = items.length - videos
+    const count = [videos ? t('learn.videosCount', { n: videos }, videos) : '', toRead ? t('learn.toReadCount', { n: toRead }) : ''].filter(Boolean).join(' · ')
+    return html`<section class="sc-card pad stack">
       <div class="stack-s"><h2>${name}</h2>${count ? html`<span class="small muted">${count}</span>` : ''}</div>
       <div class="stack">${items.map((item, i) => (item.kind === 'video' ? videoCard(item, i * 40) : textCard(item, i * 40)))}</div>
     </section>`
-    }
+  }
 
-    const view = () => {
-        const byTopic = s.topics
-            .map((topic) => ({ topic, items: s.items.filter((i) => i.topic?.slug === topic.slug) }))
-            .filter((g) => (s.active === 'all' ? g.items.length : g.topic.slug === s.active))
-        const loose = s.active === 'all' ? s.items.filter((i) => !i.topic) : []
-        return html`<main class="page">
+  const view = () => {
+    const byTopic = s.topics
+      .map((topic) => ({ topic, items: s.items.filter((i) => i.topic?.slug === topic.slug) }))
+      .filter((g) => (s.active === 'all' ? g.items.length : g.topic.slug === s.active))
+    const loose = s.active === 'all' ? s.items.filter((i) => !i.topic) : []
+    return html`<main class="page">
       ${pageHeader({ title: t('learn.title'), subtitle: t('learn.lead') })}
       <div class="row" role="tablist" aria-label="${t('learn.topics')}" style="flex-wrap: nowrap; overflow-x: auto; padding-bottom: 0.25rem">
         <button role="tab" class="sc-chip" style="flex-shrink: 0" aria-selected="${s.active === 'all' ? 'true' : 'false'}" aria-pressed="${s.active === 'all' ? 'true' : 'false'}" data-act="topic" data-slug="all">${t('learn.allTopics')}</button>
@@ -59,20 +59,20 @@ export default async function learn(ctx) {
       ${byTopic.map((g) => topicSection(g.topic.name, g.items))}
       ${loose.length ? topicSection(t('learn.moreTopics'), loose) : ''}
     </main>`
-    }
-    ctx.draw(view())
+  }
+  ctx.draw(view())
 
-    const [topicsRes, itemsRes] = await Promise.allSettled([
-        ctx.api.get('/education/topics/', { lang: locale.value }),
-        ctx.api.get('/education/', { lang: locale.value }),
-    ])
-    s.topics = topicsRes.status === 'fulfilled' ? (topicsRes.value.results ?? []) : []
-    s.items = itemsRes.status === 'fulfilled' ? (itemsRes.value.results ?? []) : []
-    s.loading = false
-    ctx.draw(view())
+  const [topicsRes, itemsRes] = await Promise.allSettled([
+    ctx.api.get('/education/topics/', { lang: locale.value }),
+    ctx.api.get('/education/', { lang: locale.value }),
+  ])
+  s.topics = topicsRes.status === 'fulfilled' ? (topicsRes.value.results ?? []) : []
+  s.items = itemsRes.status === 'fulfilled' ? (itemsRes.value.results ?? []) : []
+  s.loading = false
+  ctx.draw(view())
 
-    ctx.on('click', '[data-act="topic"]', (el) => {
-        s.active = el.dataset.slug
-        ctx.draw(view())
-    })
+  ctx.on('click', '[data-act="topic"]', (el) => {
+    s.active = el.dataset.slug
+    ctx.draw(view())
+  })
 }

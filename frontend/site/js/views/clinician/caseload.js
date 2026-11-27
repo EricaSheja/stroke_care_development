@@ -1,4 +1,4 @@
-// Owner: Emmanuel Happy Rangira (Frontend developer) · AI-assisted draft, see AI_USE_LOG.md
+// Owner: Emmanuel Happy Rangira (Frontend developer) · 
 // Safety rule: "needs a look" filters are plain facts (dates, counts). No risk score, no ranking.
 import { html } from '../../dom.js'
 import { locale, t } from '../../i18n.js'
@@ -7,12 +7,12 @@ import { emptyState, icon, pageHeader } from '../../ui.js'
 const FILTERS = ['', 'urgent', 'no_check_in', 'doses_not_marked']
 
 export default async function caseload(ctx) {
-    const s = { needs: FILTERS.includes(ctx.query.needs ?? '') ? (ctx.query.needs ?? '') : '', search: '', data: null }
-    const rows = () => (s.data ?? []).filter((p) => p.display_name.toLowerCase().includes(s.search.toLowerCase()))
-    const lastCheckin = (f) =>
-        f.days_since_check_in == null ? t('caseload.never') : f.days_since_check_in === 0 ? t('caseload.today') : t('caseload.daysAgo', { n: f.days_since_check_in })
+  const s = { needs: FILTERS.includes(ctx.query.needs ?? '') ? (ctx.query.needs ?? '') : '', search: '', data: null }
+  const rows = () => (s.data ?? []).filter((p) => p.display_name.toLowerCase().includes(s.search.toLowerCase()))
+  const lastCheckin = (f) =>
+    f.days_since_check_in == null ? t('caseload.never') : f.days_since_check_in === 0 ? t('caseload.today') : t('caseload.daysAgo', { n: f.days_since_check_in })
 
-    const view = () => html`<main class="page page-wide">
+  const view = () => html`<main class="page page-wide">
     ${pageHeader({ title: t('caseload.title'), subtitle: new Date().toLocaleDateString(locale.value, { weekday: 'long', day: 'numeric', month: 'long' }) })}
     <div class="row-between">
       <label class="sc-card row" style="padding: 0 0.9rem; min-height: 3rem; box-shadow: none; flex-wrap: nowrap; min-width: 16rem">
@@ -26,8 +26,8 @@ export default async function caseload(ctx) {
       ${FILTERS.map((n) => html`<button class="sc-chip" data-act="filter" data-n="${n}" aria-pressed="${s.needs === n ? 'true' : 'false'}">${t(`caseload.filter.${n || 'all'}`)}</button>`)}
     </div>
     ${s.data && !rows().length
-            ? emptyState(t('caseload.empty'))
-            : html`<div class="sc-card table-wrap">
+      ? emptyState(t('caseload.empty'))
+      : html`<div class="sc-card table-wrap">
           <table class="data" style="min-width: 48rem">
             <thead><tr>
               <th scope="col">${t('caseload.person')}</th><th scope="col">${t('caseload.lastCheckin')}</th><th scope="col">${t('caseload.urgent')}</th>
@@ -35,7 +35,7 @@ export default async function caseload(ctx) {
             </tr></thead>
             <tbody>
               ${rows().map(
-                (p) => html`<tr>
+        (p) => html`<tr>
                   <th scope="row" style="text-transform: none; letter-spacing: 0; font-size: 1rem; color: var(--ink)">${p.display_name}<br /><span class="tiny">${t(`roles.${p.patient_role}`)}</span></th>
                   <td>${'days_since_check_in' in p.facts ? lastCheckin(p.facts) : '—'}</td>
                   <td>${p.facts.urgent_yes_last_7_days ?? '—'}</td>
@@ -43,26 +43,26 @@ export default async function caseload(ctx) {
                   <td>${p.facts.unread_messages ?? '—'}</td>
                   <td style="text-align: right"><a href="/p/${p.patient_id}/summary" class="sc-chip" style="text-decoration: none">${t('caseload.open')}${icon('caret-right', 16)}</a></td>
                 </tr>`,
-            )}
+      )}
             </tbody>
           </table>
         </div>`}
     <p class="tiny">${t('caseload.factsOnly')}</p>
   </main>`
-    const redraw = () => ctx.draw(view())
-    async function load() {
-        s.data = await ctx.api.get('/patients/', { needs: s.needs })
-        redraw()
-    }
+  const redraw = () => ctx.draw(view())
+  async function load() {
+    s.data = await ctx.api.get('/patients/', { needs: s.needs })
     redraw()
-    await load().catch(() => redraw())
+  }
+  redraw()
+  await load().catch(() => redraw())
 
-    ctx.on('click', '[data-act="filter"]', (el) => {
-        s.needs = el.dataset.n
-        load()
-    })
-    ctx.on('input', 'input[name="search"]', (el) => {
-        s.search = el.value
-        redraw()
-    })
+  ctx.on('click', '[data-act="filter"]', (el) => {
+    s.needs = el.dataset.n
+    load()
+  })
+  ctx.on('input', 'input[name="search"]', (el) => {
+    s.search = el.value
+    redraw()
+  })
 }

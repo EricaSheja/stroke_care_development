@@ -1,4 +1,4 @@
-// Owner: Emmanuel Happy Rangira (Frontend developer) · AI-assisted draft, see AI_USE_LOG.md
+// Owner: Emmanuel Happy Rangira (Frontend developer) · 
 // The progress dashboard: what was written down, day by day. Safety rule: counts only. No percentage, score,
 // streak, target or colour that means good or bad, and a day with nothing recorded is just an empty day.
 import { html } from '../../dom.js'
@@ -8,17 +8,17 @@ import { weekCards } from '../../components/metric-card.js'
 import { icon, pageHeader } from '../../ui.js'
 
 export default async function progress(ctx) {
-    const { base } = ctx
-    const s = { days: 7, data: null, week: null, loading: true, error: '' }
-    const dayLabel = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString(locale.value, { weekday: 'short', day: 'numeric', month: 'short' })
+  const { base } = ctx
+  const s = { days: 7, data: null, week: null, loading: true, error: '' }
+  const dayLabel = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString(locale.value, { weekday: 'short', day: 'numeric', month: 'short' })
 
-    const view = () => {
-        const d = s.data
-        return html`<main class="page">
+  const view = () => {
+    const d = s.data
+    return html`<main class="page">
       ${pageHeader({ title: t('progress.title'), subtitle: t('progress.lead'), back: true })}
       ${d?.current_phase ? html`<section class="sc-card pad stack-s"><span class="sc-eyebrow">${t('recovery.stage')}</span><strong>${d.current_phase.name}</strong></section>` : ''}
       ${d
-                ? html`${s.week ? html`<section class="stack" aria-label="${t('week.title')}"><h2>${t('week.title')}</h2>${weekCards(s.week, ctx.link)}</section>` : ''}
+        ? html`${s.week ? html`<section class="stack" aria-label="${t('week.title')}"><h2>${t('week.title')}</h2>${weekCards(s.week, ctx.link)}</section>` : ''}
             <p class="row small muted" style="flex-wrap: nowrap; align-items: flex-start">${icon('info', 18)}<span>${t('progress.chart')} ${d.note}</span></p>
             <section class="sc-card pad stack-s" style="overflow-x: auto">
               <h2>${t('progress.table')}</h2>
@@ -33,12 +33,12 @@ export default async function progress(ctx) {
                 </tr></thead>
                 <tbody>
                   ${[...d.days].reverse().map(
-                    (r) => html`<tr style="border-top: 1px solid var(--line)">
+          (r) => html`<tr style="border-top: 1px solid var(--line)">
                       <th scope="row" style="text-align: left; padding: 0.4rem 0.25rem; font-weight: 600">${dayLabel(r.date)}</th>
                       <td>${r.tasks_total ? `${r.tasks_done}/${r.tasks_total}` : r.tasks_done || '–'}</td><td>${r.doses_due ? `${r.doses_taken}/${r.doses_due}` : '–'}</td>
                       <td>${r.checked_in ? t('common.yes') : '–'}</td><td>${r.bp_readings || '–'}</td><td>${r.mobility_minutes || '–'}</td>
                     </tr>`,
-                )}
+        )}
                 </tbody>
               </table>
               <h3 class="sc-eyebrow" style="font-size: 0.85rem; margin-top: 0.5rem">${t('progress.totals', { n: s.days })}</h3>
@@ -51,29 +51,29 @@ export default async function progress(ctx) {
               </dl>
             </section>
             <a href="${ctx.link('mobility')}" class="sc-btn sc-btn-ghost">${t('progress.openMovement')}</a>`
-                : s.loading ? html`<p class="muted" aria-busy="true">…</p>` : ''}
+        : s.loading ? html`<p class="muted" aria-busy="true">…</p>` : ''}
       ${s.error ? html`<p class="error" role="alert">${s.error}</p>` : ''}
     </main>`
+  }
+  const redraw = () => ctx.draw(view())
+  async function load() {
+    s.loading = true
+    try {
+      ;[s.data, s.week] = await Promise.all([
+        ctx.api.get(`${base}/progress/`, { days: s.days }),
+        s.week ?? ctx.api.get(`${base}/week/`),
+      ])
+      s.error = ''
+    } catch (e) {
+      s.error = errorText(e)
     }
-    const redraw = () => ctx.draw(view())
-    async function load() {
-        s.loading = true
-        try {
-            ;[s.data, s.week] = await Promise.all([
-                ctx.api.get(`${base}/progress/`, { days: s.days }),
-                s.week ?? ctx.api.get(`${base}/week/`),
-            ])
-            s.error = ''
-        } catch (e) {
-            s.error = errorText(e)
-        }
-        s.loading = false
-        redraw()
-    }
+    s.loading = false
     redraw()
+  }
+  redraw()
+  load()
+  ctx.on('click', '[data-act="range"]', (el) => {
+    s.days = Number(el.dataset.n)
     load()
-    ctx.on('click', '[data-act="range"]', (el) => {
-        s.days = Number(el.dataset.n)
-        load()
-    })
+  })
 }
